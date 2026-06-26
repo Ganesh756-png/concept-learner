@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Dev-Ops & Networking Lab</title>
+    <link rel="icon" href="data:,">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <i data-lucide="network"></i>
+                    </div>
+                    <div>
+                        <h1>Visual Lab</h1>
+                        <span class="subtitle">SysAdmin & DataEng</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Domain Selector Tabs -->
+            <div class="domain-tabs">
+                <button class="domain-tab active" data-domain="networking">
+                    <i data-lucide="globe"></i>
+                    <span>Network</span>
+                </button>
+                <button class="domain-tab" data-domain="linux">
+                    <i data-lucide="terminal"></i>
+                    <span>Linux</span>
+                </button>
+                <button class="domain-tab" data-domain="dataeng">
+                    <i data-lucide="database"></i>
+                    <span>Data Eng</span>
+                </button>
+                <button class="domain-tab" data-domain="azure">
+                    <i data-lucide="cloud"></i>
+                    <span>Azure Eng</span>
+                </button>
+                <button class="domain-tab" data-domain="fabric">
+                    <i data-lucide="layers"></i>
+                    <span>Fabric</span>
+                </button>
+                <button class="domain-tab" data-domain="frontend">
+                    <i data-lucide="layout"></i>
+                    <span>Frontend</span>
+                </button>
+            </div>
+
+            <!-- Search concepts -->
+            <div class="search-box">
+                <i data-lucide="search" class="search-icon"></i>
+                <input type="text" id="concept-search" placeholder="Search concepts...">
+            </div>
+
+            <!-- Concepts List -->
+            <div class="concepts-list-container">
+                <div class="concepts-section" id="networking-concepts">
+                    <!-- Dynamic rendering -->
+                </div>
+                <div class="concepts-section hidden" id="linux-concepts">
+                    <!-- Dynamic rendering -->
+                </div>
+                <div class="concepts-section hidden" id="dataeng-concepts">
+                    <!-- Dynamic rendering -->
+                </div>
+                <div class="concepts-section hidden" id="azure-concepts">
+                    <!-- Dynamic rendering -->
+                </div>
+                <div class="concepts-section hidden" id="fabric-concepts">
+                    <!-- Dynamic rendering -->
+                </div>
+                <div class="concepts-section hidden" id="frontend-concepts">
+                    <!-- Dynamic rendering -->
+                </div>
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="footer-stats">
+                    <span>Progress: <strong id="progress-percent">0%</strong></span>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Topbar Control Center -->
+            <header class="topbar">
+                <div class="concept-breadcrumb">
+                    <span id="current-domain">Networking</span>
+                    <i data-lucide="chevron-right" class="breadcrumb-arrow"></i>
+                    <span id="current-concept">TCP 3-Way Handshake</span>
+                </div>
+
+                <!-- Simulation Run Controls -->
+                <div class="run-controls">
+                    <div class="mode-toggle">
+                        <button class="mode-btn active" id="mode-realtime">
+                            <i data-lucide="play-circle"></i>
+                            <span>Real time</span>
+                        </button>
+                        <button class="mode-btn" id="mode-simulation">
+                            <i data-lucide="cpu"></i>
+                            <span>Simulation</span>
+                        </button>
+                    </div>
+
+                    <div class="control-divider"></div>
+
+                    <div class="player-controls">
+                        <button class="player-btn" id="ctrl-prev" title="Previous Step">
+                            <i data-lucide="skip-back"></i>
+                        </button>
+                        <button class="player-btn primary" id="ctrl-play" title="Play Simulation">
+                            <i data-lucide="play" id="play-icon"></i>
+                        </button>
+                        <button class="player-btn" id="ctrl-next" title="Next Step">
+                            <i data-lucide="skip-forward"></i>
+                        </button>
+                        <button class="player-btn" id="ctrl-reset" title="Reset">
+                            <i data-lucide="rotate-ccw"></i>
+                        </button>
+                    </div>
+
+                    <div class="control-divider"></div>
+
+                    <div class="speed-control">
+                        <i data-lucide="gauge"></i>
+                        <input type="range" id="sim-speed" min="0.5" max="3" step="0.1" value="1" title="Simulation Speed">
+                        <span id="speed-val">1.0x</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Workspace: Visual Canvas + Parameter Drawer -->
+            <div class="workspace">
+                <!-- Visual Canvas Area -->
+                <div class="canvas-container">
+                    <!-- Floating Canvas Tools -->
+                    <div class="canvas-toolbar">
+                        <button class="tool-btn active" id="tool-select" title="Interact / Select">
+                            <i data-lucide="mouse-pointer"></i>
+                        </button>
+                        <button class="tool-btn" id="tool-zoom-in" title="Zoom In">
+                            <i data-lucide="zoom-in"></i>
+                        </button>
+                        <button class="tool-btn" id="tool-zoom-out" title="Zoom Out">
+                            <i data-lucide="zoom-out"></i>
+                        </button>
+                        <button class="tool-btn" id="tool-fit" title="Fit to Screen">
+                            <i data-lucide="maximize"></i>
+                        </button>
+                        <div class="tool-separator"></div>
+                        <button class="tool-btn" id="tool-info" title="Toggle Concept Info">
+                            <i data-lucide="info"></i>
+                        </button>
+                    </div>
+
+                    <!-- SVG Canvas -->
+                    <svg id="visual-canvas" class="dot-grid">
+                        <defs>
+                            <!-- Grids, Filters, Markers -->
+                            <pattern id="grid-pattern" width="30" height="30" patternUnits="userSpaceOnUse">
+                                <circle cx="15" cy="15" r="1.2" fill="rgba(255,255,255,0.07)" />
+                            </pattern>
+                            <!-- Drop Shadow for nodes -->
+                            <filter id="glow-effect" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="8" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                            </filter>
+                            <!-- Arrow Marker -->
+                            <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 1 L 10 5 L 0 9 z" fill="rgba(255,255,255,0.4)" />
+                            </marker>
+                            <!-- Glow Line Marker -->
+                            <marker id="arrow-glow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 1 L 10 5 L 0 9 z" fill="#3B82F6" />
+                            </marker>
+                        </defs>
+                        <!-- Grid overlay -->
+                        <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+                        <!-- Main group for zooming/panning -->
+                        <g id="canvas-stage">
+                            <!-- Connections, Nodes, Packets dynamic content -->
+                        </g>
+                    </svg>
+
+                    <!-- Concept Explanation Overlays -->
+                    <div class="explanation-overlay" id="explanation-box">
+                        <h3 id="exp-title">Concept Overview</h3>
+                        <p id="exp-text">Select a concept to start visualizing its mechanics.</p>
+                    </div>
+                </div>
+
+                <!-- Right Side: Parameters & Mock Terminal Console -->
+                <aside class="control-drawer">
+                    <!-- Config Tabs -->
+                    <div class="drawer-tabs">
+                        <button class="drawer-tab active" data-drawer-tab="parameters">
+                            <i data-lucide="sliders"></i>
+                            <span>Parameters</span>
+                        </button>
+                        <button class="drawer-tab" data-drawer-tab="cli">
+                            <i data-lucide="terminal"></i>
+                            <span>CLI & Code</span>
+                        </button>
+                        <button class="drawer-tab" data-drawer-tab="ai-assistant">
+                            <i data-lucide="bot"></i>
+                            <span>AI Co-Pilot</span>
+                        </button>
+                    </div>
+
+                    <!-- Panel: Parameters -->
+                    <div class="drawer-panel active" id="panel-parameters">
+                        <div class="panel-section-title">Configure Environment</div>
+                        <div class="parameter-controls-container" id="parameters-form">
+                            <!-- Dynamic Parameter Inputs -->
+                            <p class="empty-params">No configurable parameters for this concept. <br><br><span style="color: var(--color-cyan)">Tip:</span> Switch to the <strong>CLI & Code</strong> tab to view code syntax.</p>
+                        </div>
+                        
+                        <div class="simulation-status-container">
+                            <div class="panel-section-title">Execution State</div>
+                            <div class="status-card">
+                                <div class="status-row">
+                                    <span class="label">Status:</span>
+                                    <span class="val status-indicator" id="sim-status-text">Idle</span>
+                                </div>
+                                <div class="status-row">
+                                    <span class="label">Current Step:</span>
+                                    <span class="val" id="sim-step-text">0 / 0</span>
+                                </div>
+                                <div class="status-progress-track">
+                                    <div class="status-progress-bar" id="sim-progress-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel: CLI Commands & Logs -->
+                    <div class="drawer-panel" id="panel-cli">
+                        <div class="panel-section-title">Terminal Equivalent</div>
+                        <div class="terminal-container">
+                            <div class="terminal-header">
+                                <div class="terminal-dots">
+                                    <span class="dot red"></span>
+                                    <span class="dot yellow"></span>
+                                    <span class="dot green"></span>
+                                </div>
+                                <span class="terminal-title">bash - session</span>
+                                <button class="copy-terminal-btn" id="btn-copy-terminal" title="Copy CLI Commands">
+                                    <i data-lucide="copy"></i>
+                                </button>
+                            </div>
+                            <div class="terminal-body" id="terminal-console">
+                                <div class="terminal-line"><span class="prompt">$</span> Welcome to the Networking, Linux & DataEng Lab.</div>
+                                <div class="terminal-line"><span class="prompt">$</span> Select a topic on the left to inspect operations.</div>
+                            </div>
+                        </div>
+
+                        <!-- Configuration File Reference -->
+                        <div class="config-reference-container">
+                            <div class="panel-section-title" id="config-ref-title">Reference Config / Code</div>
+                            <div class="code-box-container">
+                                <pre><code class="language-yaml" id="config-code-block"># Choose a concept to see real-world configs</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel: AI Assistant -->
+                    <div class="drawer-panel" id="panel-ai-assistant">
+                        <div class="panel-section-title">Antigravity Co-Pilot</div>
+                        <div class="chat-container">
+                            <div class="chat-messages" id="chat-messages-log">
+                                <div class="chat-msg system">
+                                    <div class="msg-avatar"><i data-lucide="bot"></i></div>
+                                    <div class="msg-bubble">
+                                        <p>Hello! I am <strong>Antigravity</strong>, your AI learning assistant. Ask me to explain concepts, show examples, or directly load and run interactive lab simulations!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chat-input-area">
+                                <input type="text" id="chat-user-input" placeholder="Ask about concepts or load 'onelake'..." />
+                                <button id="chat-send-btn"><i data-lucide="send"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification Toasts -->
+    <div id="toast-container"></div>
+
+    <script src="js/conceptsData.js"></script>
+    <script src="js/simulations/networking.js"></script>
+    <script src="js/simulations/linux.js"></script>
+    <script src="js/simulations/dataeng.js"></script>
+    <script src="js/simulations/azure.js"></script>
+    <script src="js/simulations/fabric.js"></script>
+    <script src="js/simulations/frontend.js"></script>
+    <script src="js/simulationEngine.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
