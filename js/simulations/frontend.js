@@ -1199,3 +1199,6 @@ function adjustFlexboxItems(direction, justify, animate = false, speed = 1.0) {
         text.setAttribute("y", target.y + h / 2 + 5);
     });
 }
+
+window.FrontendSimulations = FrontendSimulations;
+

@@ -2257,3 +2257,7 @@ df.groupBy("Region").sum("SalesAmount").show()`
 ]
 };
 
+window.ConceptsData = ConceptsData;
+
+
+

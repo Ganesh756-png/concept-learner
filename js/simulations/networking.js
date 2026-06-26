@@ -685,3 +685,7 @@ function alertUser(msg) {
         setTimeout(() => toast.remove(), 300);
     }, 2500);
 }
+
+window.NetworkingSimulations = NetworkingSimulations;
+window.animatePacket = animatePacket;
+

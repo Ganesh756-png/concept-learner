@@ -396,3 +396,6 @@ class VisualSimulationEngine {
         consoleEl.scrollTop = consoleEl.scrollHeight;
     }
 }
+
+window.VisualSimulationEngine = VisualSimulationEngine;
+

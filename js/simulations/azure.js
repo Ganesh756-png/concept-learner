@@ -1180,3 +1180,6 @@ const AzureSimulations = {
     }
 };
 
+window.AzureSimulations = AzureSimulations;
+
+

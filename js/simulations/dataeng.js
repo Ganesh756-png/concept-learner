@@ -496,3 +496,6 @@ const DataEngSimulations = {
         }
     }
 };
+
+window.DataEngSimulations = DataEngSimulations;
+
